@@ -41,9 +41,12 @@ const SHOP = {
   mapDirections: "https://maps.google.com/maps?q=21.4225,39.8262",
 
   // ── Hours ─────────────────────────────────────────────────────
+  // Add *Ar keys for Arabic text; if omitted, the English value shows as fallback.
   hours: {
-    weekdays: "8:00 AM – 11:00 PM",
-    weekends: "Open All Day"
+    weekdays:   "8:00 AM – 11:00 PM",
+    weekdaysAr: "٨:٠٠ صباحاً – ١١:٠٠ مساءً",
+    weekends:   "Open All Day",
+    weekendsAr: "مفتوح طوال اليوم"
   },
 
   // ── Homepage highlights ───────────────────────────────────────
