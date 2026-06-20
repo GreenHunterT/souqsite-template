@@ -6,6 +6,14 @@
 (function () {
   'use strict';
 
+  // Inline SVG data URI shown when any product image fails to load.
+  // Keeps the card layout intact — no blank collapse, no broken icon.
+  var IMG_PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 3">' +
+    '<rect width="4" height="3" fill="#2b2820"/>' +
+    '</svg>'
+  );
+
   // ── LANGUAGE HELPERS ────────────────────────────────────────────
   function getLang() {
     return (
@@ -307,14 +315,14 @@
     grid.innerHTML = products.map(p => {
       const name = lang === 'ar' ? p.name : (p.nameEn || p.name);
       const desc = lang === 'ar' ? p.description : (p.descriptionEn || p.description);
+      const imgSrc = p.image || IMG_PLACEHOLDER;
       return `
         <article class="product-card" data-cat="${p.category || ''}">
           <div class="product-img">
             <img
-              src="${p.image}"
+              src="${imgSrc}"
               alt="${name}"
               loading="lazy"
-              onerror="this.parentElement.style.background='var(--bg-alt)';this.style.display='none'"
             />
             ${p.category ? `<span class="product-cat-badge" aria-hidden="true">${capitalize(p.category)}</span>` : ''}
           </div>
@@ -326,6 +334,14 @@
         </article>
       `;
     }).join('');
+
+    // Attach error handlers after render — avoids inline onerror and keeps
+    // the card layout intact if an image URL fails (shows themed placeholder).
+    grid.querySelectorAll('.product-img img').forEach(function(img) {
+      img.addEventListener('error', function() {
+        this.src = IMG_PLACEHOLDER;
+      }, { once: true });
+    });
 
     if (grid.classList.contains('reveal-grid')) grid.classList.add('visible');
   }

@@ -57,7 +57,7 @@ const SHOP = {
   // Replace with a real local path once you have the shop photo:
   // hero: { image: "assets/images/hero.jpg" }
   hero: {
-    image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1920&q=80"
+    image: "https://picsum.photos/seed/ss-hero/1920/1080"
   },
 
   // ── WhatsApp pre-filled message ───────────────────────────────
